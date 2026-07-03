@@ -3,13 +3,18 @@ import { NextResponse } from "next/server"
 
 
 
+interface movieTitle {
+	title:string
+}
+
 export async function GET(){
     try {
         
-        const movies = mongoClient.db("Movies").collection("movies").find()
+        const movies = await mongoClient.db('Movies').collection('movies').find<movieTitle[]>({}).toArray()
+
         console.log(movies)
+	return NextResponse.json({ status: 200,movies:movies})
     } catch (error) {
-        
+        console.error(error) 
     }
-  return NextResponse.json({ status: 200})
 }
