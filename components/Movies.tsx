@@ -18,10 +18,10 @@ const getData = async () => {
 
 
 
+
 const Movies = async () => {
 	const response = await getData()
 	const movies:{title:string}[] = response?.movies || [{title:""}]
-
 
 	return (
 		<div>
