@@ -1,4 +1,4 @@
-import { mongoClient } from "@/Util/Mongo/client"
+import { mongoClient } from "@/Util/Mongo/MongoClient"
 import { NextResponse } from "next/server"
 
 

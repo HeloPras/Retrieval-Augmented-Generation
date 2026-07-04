@@ -1,4 +1,5 @@
 import Movies from "@/components/Movies";
+import SearchBar from "@/components/SearchBar";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -7,9 +8,7 @@ export default function Home() {
 		<>
 
 		<div>
-		<Suspense fallback = {<>Loading</>}>
-		<Movies />
-		</Suspense>
+		<SearchBar/>
 		</div>
 		</>
 	)

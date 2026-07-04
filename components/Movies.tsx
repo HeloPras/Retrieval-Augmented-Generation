@@ -17,11 +17,18 @@ const getData = async () => {
 }
 
 
+const embedData = async (data:mongoFile[])=>{
+	
+		
+
+}
+
 
 
 const Movies = async () => {
 	const response = await getData()
-	const movies:{title:string}[] = response?.movies || [{title:""}]
+
+	const movies:mongoFile[] = response.movies || []
 
 	return (
 		<div>
@@ -29,7 +36,7 @@ const Movies = async () => {
 		{movies.map((movie)=>{
 			return(
 				<>
-					<p key = {movie.title}>{movie.title}</p>
+				<p key = {movie.title}>{movie.title}</p>
 				</>)})}
 				</Suspense>
 
