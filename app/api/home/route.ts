@@ -12,7 +12,6 @@ export async function GET(){
         
         const movies = await mongoClient.db('Movies').collection('movies').find<movieTitle[]>({}).toArray()
 
-        console.log(movies)
 	return NextResponse.json({ status: 200,movies:movies})
     } catch (error) {
         console.error(error) 
