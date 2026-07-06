@@ -1,5 +1,8 @@
-import { GoogleGenAI } from "@google/genai";
+import { mongoClient } from "@/Util/Mongo/MongoClient";
+import { EmbedContentResponse, GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
+
+
 
 
 
@@ -8,43 +11,94 @@ export async function POST(req:NextRequest){
 
 	const ai = new GoogleGenAI({})
 
+	async function embed(content:string){
 
+		try{
+
+			const response  = await ai.models.embedContent({
+				model:'gemini-embedding-2',
+				contents:content
+			})
+
+			if(response){
+				return response.embeddings
+
+			}
+
+		}
+		catch(error){
+		}
+
+		return 
+
+	}
 
 	try {
 
 		const body =await req.json()
-		const movies = body.movies
 
-		// console.log("From vectorEmbedding API",movies)
 
-		if(!movies || movies.length == 0){return}
+		const embeddingFor = body.embeddingFor
 
-		let n = 0
+		if(embeddingFor == 'database')
+			{
 
-		for(let movie of movies ){
 
-			if(movie.vectorEmbedding)continue;
+				const movies = body.movies
 
-			const embedding = await ai.models.embedContent({
+				// console.log("From vectorEmbedding API",movies)
 
-				model:'gemini-embedding-1',
-				contents:movie.content
-			})
+				if(!movies || movies.length == 0){return}
+				for(let movie of movies ){
 
-			if(embedding){
-				console.log("this is the embedding",embedding)		
+
+					try {
+						const embedding =await embed(movie.content)
+
+
+						if(embedding){
+
+							mongoClient.db('Movies').collection('movies').updateOne(
+
+								{title:movie.title},
+								{$set:{vectorEmbedding:embedding[0].values}})
+
+						}
+
+					} catch (error) {
+
+						console.error(error)
+
+					}
+
+				}
+				return NextResponse.json({status:200})
+
 			}
 
-			break;
+
+			if(embeddingFor == "search"){
+
+
+				try {
+
+					const embedding = await embed(body.search)
+					if(embedding){
+						return NextResponse.json({status:200,embedding:embedding[0].values,ok:true})
+					}
 
 
 
-
-		}
-
+					return NextResponse.json({status:400})
 
 
-		return NextResponse.json({status:200})
+				} catch (error) {
+
+					return NextResponse.json({status:400,error:error,ok:false})
+				}
+
+			}
+
 
 	} catch (error) {
 
