@@ -8,22 +8,22 @@ const clicked = async(content:string)=>{
 
 
 	try {
-		
-	const response = await fetch("http://localhost:3000/api/vectorEmbedding",
-				     {method:"POST",
-					     body:JSON.stringify({search:content,embeddingFor:"search"})})
-	const body = await response.json()
-	const embeddng = body.embeddng
 
-	if(!body.ok){
-		throw Error("Response was shit")
-	}
+		const response = await fetch("http://localhost:3000/api/vectorEmbedding",
+					     {method:"POST",
+						     body:JSON.stringify({search:content,embeddingFor:"search"})})
+						     const body = await response.json()
+						     const embeddng = body.embeddng
 
-	 fetch("http://localhost:3000/api/searchquery",{method:"POST",body:JSON.stringify({embedding:embeddng})})
+						     if(!body.ok){
+						      throw Error("Response was shit")
+						     }
+
+						     fetch("http://localhost:3000/api/searchquery",{method:"POST",body:JSON.stringify({embedding:embeddng})})
 
 	} catch (error) {
-		console.log(error)
-	}
+							     console.log(error)
+						     }
 
 }
 

@@ -83,13 +83,15 @@ export async function POST(req:NextRequest){
 				try {
 
 					const embedding = await embed(body.search)
+
+					console.log("Reached here and here isthe embedding",embedding)
+
 					if(embedding){
 						return NextResponse.json({status:200,embedding:embedding[0].values,ok:true})
 					}
 
 
 
-					return NextResponse.json({status:400})
 
 
 				} catch (error) {
