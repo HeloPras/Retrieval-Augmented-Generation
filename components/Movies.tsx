@@ -4,6 +4,7 @@ import { Suspense } from "react"
 
 const getData = async () => {
 	try {
+
 		const response = await fetch("http://localhost:3000/api/movie")
 			if(!response.ok){
 			console.log("Failed")
