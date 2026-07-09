@@ -22,19 +22,17 @@ export async function POST(req:NextRequest){
 			}
 		]).toArray()
 
-		if(result){
-		console.log("This is the result from search query",result)
-		}
 
 
+
+		return NextResponse.json({data:result},{status:200})
 
 
 	} catch (error) {
 
-		console.log("Faced an error", error)
+		return NextResponse.json({error:"Internal Server Error"},{status:500})
 
 	}
 
 
-	return NextResponse.json({status:200})
 }
