@@ -5,28 +5,34 @@ export async function POST(req:NextRequest){
 
 	const body = await req.json()
 
-	if(body){
-		console.log("this is the console from searchquery route  ",body)
-	}
-
-	const queryVector = body
+	const queryVector = body.embedding
 
 	try {
 
-		// const result = db.collection("movies").aggregate([
-		// 	{
-		// 		$vectorSearch:{
-		// 			index: "vector_index",
-		// 			path: "vectorEmbedding",
-		// 			queryVector:
-		//
-		// 		}
-		// 	}
-		// ])
+		const result =await  db.collection("movies").aggregate([
+			{
+				$vectorSearch:{
+					index: "movies_vector_index",
+					path: "vectorEmbedding",
+					queryVector:queryVector,
+					numCandidates:100,
+					limit:5
+
+				}
+			}
+		]).toArray()
+
+		if(result){
+		console.log("This is the result from search query",result)
+		}
+
+		console.log("Result finish")
 
 
 
 	} catch (error) {
+
+		console.log("Faced an error", error)
 
 	}
 

@@ -13,7 +13,9 @@ const clicked = async(content:string)=>{
 					     {method:"POST",
 						     body:JSON.stringify({search:content,embeddingFor:"search"})})
 						     const body = await response.json()
-						     const embeddng = body.embeddng
+
+
+						     const embeddng = body.embedding
 
 						     if(!body.ok){
 						      throw Error("Response was shit")
