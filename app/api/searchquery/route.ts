@@ -26,7 +26,6 @@ export async function POST(req:NextRequest){
 		console.log("This is the result from search query",result)
 		}
 
-		console.log("Result finish")
 
 
 

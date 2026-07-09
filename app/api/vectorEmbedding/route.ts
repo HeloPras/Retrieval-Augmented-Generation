@@ -86,7 +86,7 @@ export async function POST(req:NextRequest){
 
 
 					if(embedding){
-						return NextResponse.json({status:200,embedding:embedding[0].values,ok:true})
+						return NextResponse.json({status:200,embedding:embedding[0].values,})
 					}
 
 
@@ -95,7 +95,7 @@ export async function POST(req:NextRequest){
 
 				} catch (error) {
 
-					return NextResponse.json({status:400,error:error,ok:false})
+					return NextResponse.json({status:400,error:error})
 				}
 
 			}
