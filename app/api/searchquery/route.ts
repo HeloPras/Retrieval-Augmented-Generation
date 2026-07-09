@@ -19,13 +19,23 @@ export async function POST(req:NextRequest){
 					limit:5
 
 				}
+
+			},
+			{
+				$project:{
+
+					_id:0,
+					title:1,
+					score:{$meta:"vectorSearchScore"}
+				},
 			}
 		]).toArray()
 
+		console.log('from searchquery api', result)
 
 
 
-		return NextResponse.json({data:result},{status:200})
+		return NextResponse.json({data:JSON.stringify(result)},{status:200})
 
 
 	} catch (error) {
